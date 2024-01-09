@@ -29,10 +29,12 @@ def create_app(test_config=None):
 
     db.init_app(app)
 
-    from models import User, Event, Region
+    from paralympics_flask.models import User, Event, Region
     with app.app_context():
         db.create_all()
         add_data_from_csv()
+
+        from paralympics_flask import views
 
     return app
 
@@ -40,7 +42,7 @@ def create_app(test_config=None):
 def add_data_from_csv():
     """Adds data to the database if it does not already exist."""
 
-    from models import Region, Event
+    from paralympics_flask.models import Region, Event
 
     # If there are no regions in the database, then add them
     first_region = db.session.execute(db.select(Region)).first()
@@ -82,6 +84,3 @@ def add_data_from_csv():
                           highlights=row[15])
                 db.session.add(e)
             db.session.commit()
-
-
-import views

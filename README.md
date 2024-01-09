@@ -8,7 +8,7 @@
 
     - MacOS: `python3 -m venv .venv` then `source .venv/bin/activate`
     - Windows: `py -m venv .venv` then `.venv\Scripts\activate`
-4. Check `pip` is the latest versions: `python3 -m pip install --upgrade pip setuptools wheel`
+4. Check `pip` is the latest versions: `pip install --upgrade pip`
 5. Install the requirements. You may wish to edit [requirements.txt](requirements.txt) first to remove the packages for
    Flask or Dash if you only want to complete the activities for one type of app.
 
