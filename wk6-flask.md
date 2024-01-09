@@ -12,3 +12,6 @@ Check that the app runs before starting any of the activities.
     You may need to change the port number if you already have something running on the default port 5000 e.g. `flask --app paralympics_flask run --debug --port=5050`.
 2. Go to the URL that is shown in the terminal, likely to be:
 3. Stop the app using `CTRL+C`
+
+
+Bootstrap downloaded from https://getbootstrap.com/docs/5.3/getting-started/download/
