@@ -127,23 +127,7 @@ To create a simple page using Bootstrap:
 Bootstrap can be used with a grid system. Bootstrap is no longer restricted to 12
 columns. The grid system is not covered in the teaching materials for COMP0034 though you are welcome to use it in your coursework.
 
-There are lots of freely available templates and examples that use Bootstrap.
-See [Bootstrap documentation](http://getbootstrap.com/docs).
-
-Bootstrap is widely used which some say leads to many sites looking similar, others criticisms include the fact that it
-is comprehensive and yet you may only want to use a small subset of its features. While writing your own css may take
-time, there are alternatives to Bootstrap you can explore such as:
-
-- [Pure.css](https://purecss.io/start/)
-- [Materialize](https://materializecss.com/getting-started.html)
-- [Flexbox Grid](http://flexboxgrid.com/)
-- [HTML Kickstart](http://www.99lime.com/elements/)
-- [ZURB foundation](https://foundation.zurb.com/)
-
-## COMP0034 Coursework
-
-**For your coursework it is recommended that you use a third party CSS** (check it has an open source license, ie that you
-are allowed to use it). CSS is not considered in the marking scheme so there is no value in writing your own.
+There are lots of freely available templates and examples that use Bootstrap. See [Bootstrap documentation](http://getbootstrap.com/docs).
 
 ## Links
 

@@ -27,6 +27,9 @@ pages that include a feature that uses a machine learning model or pages that wo
 1. [Dash activities](activities/1-dash.md)
 2. [Flask activities](activities/1-flask.md)
 
+The Flask activities are likely to take longer than the Dash activities, as it includes Jinja templates as well as
+HTML and CSS.
+
 If you want to learn a little HTML, CSS and JavaScript independently of the application framework then the activities
 folder includes optional
 activities: [html intro](activities/2-html_intro), [css intro](activities/3-css_intro), [responsive design intro](activities/4-responsive_intro.md),

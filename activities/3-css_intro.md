@@ -155,4 +155,4 @@ HTML `<div></div>` tag divides content into sections. CSS styling can then be ap
 
 ![CSS and DIV](img/css_div.png)
 
-You will see the `<div>` tag used in a much of the teaching and reference materials used in COMP0034.
+You will see the `<div>` tag used in the teaching and reference materials used in COMP0034.
