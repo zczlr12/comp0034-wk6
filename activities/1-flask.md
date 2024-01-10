@@ -3,6 +3,13 @@
 The Flask application is based on the paralympics application that you created for the REST API, however the Marshmallpw
 schemas and REST API routes have been removed. The application code should otherwise be as you saw at the end of week 4.
 
+In this activity you will:
+
+- Create a Flask page template using HTML only
+- Add styling to an HTML template using Bootstrap CSS
+- Adapt the HTML and CSS to support responsive styling
+- Use Jina to create parent/child templates for a Flask application
+
 ## Check the Flask app runs
 
 Check that the app runs before starting any of the activities.
@@ -223,9 +230,9 @@ and provides example code you can copy and adapt.
 If you get stuck, look at the [week 7 code](https://github.com/nicholsons/comp0034-wk7/tree/master/paralympics_flask),
 and find route definition for `/css` in `views.py`, and `index_css.html` in the `templates` folder.
 
-## Using responsive CSS
+## Adapt the HTML and CSS to create a responsive template design
 
-### Intro to responsive CSS
+### Intro to responsive design
 
 The intent of responsive design is to make web pages look good on all devices: desktop, tablets, and phones. For
 example, people are typically used to scrolling websites vertically but not horizontally. So there are techniques to
