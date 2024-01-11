@@ -450,39 +450,291 @@ yet.
 
 ### 2. Add the contents to the rows
 
+The content includes HTML tags from Dash html such as paragraph (html.P), heading 1 (html.H1) and image (html.Img).
+These are in the Dash html reference.
+
+Images are placed in the 'assets' folder. To reference these in the `src=` parameter use the `app.get_asset_url()`
+function. In the brackets specify the file name and any subdirectory below the 'assets' directory. You will see examples
+in the code below.
+
+The dropdown and checkbox can either be Dash Boostrap components (dbc) style so dbc.Select() and dbc.Checklist(); or
+Dash core components (dcc).
+
+[DBC components reference](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/)
+[Dash Core Components reference](https://dash.plotly.com/dash-core-components/dropdown).
+
+#### Row 1
+
 The first row has a heading level 1 with the app name and a paragraph with some descriptive text (lorem ipsum
-placeholder for now). You can write what you wish or copy the text below. Place these inside the children=[] for row
-one.
+placeholder for now). You can write what you wish or copy the text below. Place these inside the `children=[]` of the
+column in row one.
 
 ```python
-hmlt.H1(""),
+html.H1("Paralympics Data Analytics"),
 html.P(
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue luctus elit nec gravida. Fusce efficitur posuere metus posuere malesuada. ")
 ```
 
+#### Row 2
+
 The second row has:
 
-- column with a width=2 containing
+- column 1: contains
   an [input of type select](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/) (a
   dropdown).
-- column with a width=4 that will have a line chart.
-- column with a width=2 containing
+- column 2: will have a line chart.
+- column 3: contains
   an [input of type checklist](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/)
-- a column of width=4 that will contain a bar chart.
+- column 4: contains a bar chart.
+
+```python
+# Column 1 children
+dbc.Select(
+    options=[
+        {"label": "Events", "value": "events"},  # The value is in the format of the column heading in the data
+        {"label": "Sports", "value": "sports"},
+        {"label": "Countries", "value": "countries"},
+        {"label": "Athletes", "value": "participants"},
+    ],
+    value="events",  # The default selection
+    id="dropdown-input",  # id uniquely identifies the element, will be needed later for callbacks
+),
+
+# Column 2 children
+# className="ing-fluid" is a pure Bootstrap class and prevented the image spanning the next column
+html.Img(src=app.get_asset_url('event-chart-placeholder.png'), className="img-fluid"),
+
+# Column 3 children
+html.Div(
+    [
+        dbc.Label("Select the Paralympic Games type"),
+        dbc.Checklist(
+            options=[
+                {"label": "Summer", "value": "summer"},
+                {"label": "Winter", "value": "winter"},
+            ],
+            value=["summer"],  # Values is a list as you can select 1 AND 2
+            id="checklist-input",
+        ),
+    ]
+)
+
+# Column 4 children
+html.Img(src=app.get_asset_url('bar-chart-placeholder.png'), className="img-fluid")
+```
+
+#### Row 3
 
 The third row has:
 
-- a column with a width=6 that will have a map visualisation with markers for events.
-- a column with a width=6 that will display details for a selected paralympic event.
-
-The select input (dropdown) will be used to select a type of line chart which can be Events,. If you are using dbc then
-use the [dbc.Select()](), if you are using Dash without dbc then use [Dash Core Components, dcc.Dropdown]().
+- column 1: a map visualisation with markers for events
+- column 2: a card that displays details for a selected paralympic event, this will be dynamically generated when the
+  event is clicked on
 
 ```python
+# Column 1 children
+html.Img(src=app.get_asset_url('map-placeholder.png'), className="img-fluid")
 
+# Column 2 children
+dbc.Card(
+    [
+        dbc.CardImg(src="assets/logos/1960_Rome.png", top=True),
+        dbc.CardBody(
+            [
+                html.H4("TownName 2026", className="card-title"),
+                html.P(
+                    "Highlights of the paralympic event will go here. This will be a sentence or two.",
+                    className="card-text",
+                ),
+                html.P(
+                    "Number of athletes: XX",
+                    className="card-text",
+                ),
+                html.P(
+                    "Number of events: XX",
+                    className="card-text",
+                ),
+                html.P(
+                    "Number of countries: XX",
+                    className="card-text",
+                ),
+            ]
+        ),
+    ],
+    # style={"width": "18rem"},
+)
 ```
+
+Run the app and check it displays as you expected. I'm no designer, the design could be improved!
 
 ### The end
 
-Well done on reaching the end of the activities! You have now built a dashboard layout. Next week you will add charts to
-this and learn how to add additional pages to the layout.
+Well done on reaching the end of the activities! You have now built a dashboard layout. Next week you will learn how to
+create and add charts.
+
+### Multi-page dashboard (optional for those that have a multipage layout)
+
+To create a multi-page Dashboard see the [Dash tutorial](https://dash.plotly.com/urls)
+and [dbc.Navbar()](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/navbar/).
+
+There is a modified version of the paralympics app in week 7 starter code that divides the app into two pages.
+
+The changes made:
+
+1. Create a new file called paralympic_app.py
+2. Move the code to create and run the Dash instance out of the original file to this new file.
+3. Modify the creation of the app to include `use_pages=True`
+   e.g. `app = Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=meta_tags, use_pages=True)`
+4. Rename the original file to 'map.py'
+5. Make a copy of 'map.py' and name it 'charts.py'
+6. Delete the code to create row_two and its selectors from map.py and remove it from the layout also
+7. Delete the code to create row_three and the card from charts.py and remove it from the layout also
+8. Add the import `from dash import register_page, get_asset_url` to map.py and charts.py
+9. Add code at the start of `charts.py` to register the page on the
+   app: `register_page(__name__, name='Charts', title='Charts')`
+10. Add code at the start of `events.py` to register the page on the
+    app: `register_page(__name__, name='Events', title='Events', path="/")` this sets the Events page to be the home
+    page
+11. In `map.py` and `charts.py`, change any `app.get_asset_url` to `get_asset_url` otherwise you will get circular
+    import
+    issues.
+12. In `map.py` and `charts.py`, change `app.layout=` to `layout=`
+13. In `paralympics_app.py` add an `app.layout` section as below. This adds a menu (navbar) and a container where the
+    other pages content will be displayed. The code is adapted from the Dash multi-page app documentation and the Dash
+    Bootstrap Components navbar documentation.
+
+    ```python
+    # From https://dash-bootstrap-components.opensource.faculty.ai/docs/components/navbar/
+    navbar = dbc.NavbarSimple(
+        children=[
+            dbc.NavItem(dbc.NavLink("Event Details", href=dash.page_registry['pages.events']['path'])),
+            dbc.NavItem(dbc.NavLink("Charts", href=dash.page_registry['pages.charts']['path'])),
+        ],
+        brand="Paralympics Dashboard",
+        brand_href="#",
+        color="primary",
+        dark=True,
+    )
+
+    app.layout = html.Div([
+        # Nav bar
+        navbar,
+        # Area where the page content is displayed
+        dash.page_container
+    ])
+    ```
+14. Run the app from paralympics_app.py. You should have two pages and a clickable menu bar.
+
+## Final code for the single page app
+
+```python
+# This version is after the final activity in week 7
+from dash import Dash, html
+import dash_bootstrap_components as dbc
+
+# Variable that contains the external_stylesheet to use, in this case Bootstrap styling from dash bootstrap
+# components (dbc)
+external_stylesheets = [dbc.themes.BOOTSTRAP]
+
+# Define a variable that contains the meta tags
+meta_tags = [
+    {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+]
+
+# Pass the stylesheet variable to the Dash app constructor
+app = Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=meta_tags)
+
+# Variables that define the three rows of the layout
+row_one = html.Div(
+    dbc.Row([
+        dbc.Col([html.H1("Paralympics Dashboard"), html.P(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue luctus elit nec gravida. Fusce "
+            "efficitur posuere metus posuere malesuada. ")
+                 ], width=12),
+    ]),
+)
+
+row_two = html.Div(
+    dbc.Row([
+        dbc.Col(children=[dbc.Select(id="type-dropdown",
+                                     # id uniquely identifies the element, will be needed later
+                                     options=[
+                                         {"label": "Events", "value": "events"},
+                                         # The value is in the format of the column heading in the data
+                                         {"label": "Sports", "value": "sports"},
+                                         {"label": "Countries", "value": "countries"},
+                                         {"label": "Athletes", "value": "participants"},
+                                     ],
+                                     value="events"  # The default selection
+                                     ),
+                          ], width=2),
+        dbc.Col(children=[
+            html.Img(src=app.get_asset_url('line-chart-placeholder.png'), className="img-fluid"),
+        ], width=4),
+        dbc.Col(children=[
+            dbc.Checklist(
+                options=[
+                    {"label": "Summer", "value": "summer"},
+                    {"label": "Winter", "value": "winter"},
+                ],
+                value=["summer"],  # Values is a list as you can select both winter and summer
+                id="checklist-input",
+            ),
+        ], width=2),
+        dbc.Col(children=[
+            html.Img(src=app.get_asset_url('bar-chart-placeholder.png'), className="img-fluid"),
+        ], width=4),
+    ], align="start")
+)
+
+row_three = html.Div(
+    dbc.Row([
+        dbc.Col(children=[
+            html.Img(src=app.get_asset_url('map-placeholder.png'), className="img-fluid"),
+        ], width=8),
+        dbc.Col(children=[
+            dbc.Card(
+                [
+                    dbc.CardImg(src=app.get_asset_url('logos/2022_Beijing.jpg'), top=True, style={"width": "200px"}),
+                    dbc.CardBody(
+                        [
+                            html.H4("TownName 2026", className="card-title"),
+                            html.P(
+                                "Highlights of the paralympic event will go here. This will be a sentence or two.",
+                                className="card-text",
+                            ),
+                            html.P(
+                                "Number of athletes: XX",
+                                className="card-text",
+                            ),
+                            html.P(
+                                "Number of events: XX",
+                                className="card-text",
+                            ),
+                            html.P(
+                                "Number of countries: XX",
+                                className="card-text",
+                            ),
+                        ]
+                    ),
+                ],
+                style={"width": "18rem"},
+            )
+
+        ], width=4),
+    ], align="start")
+)
+
+# Add an HTML layout to the Dash app.
+# The layout is wrapped in a DBC Container()
+app.layout = dbc.Container([
+    row_one,
+    row_two,
+    row_three,
+])
+
+# Run the Dash app
+if __name__ == '__main__':
+    app.run(debug=True)
+    # Runs on port 8050 by default. If you have a port conflict, add the parameter port=   e.g. port=8051
+```
