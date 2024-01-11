@@ -10,19 +10,26 @@ In this activity you will:
 - Adapt the Dash layout to allow several chart areas
 - Add dropdown selectors and check boxes to the Dash layout
 
-The activity builds towards a single page Dashboard design with the following layout:
+The activity builds towards a single page Dashboard design with the following layout. This uses a 12 column grid layout:
 
 <table>
-<tr><td colspan="2">Heading and intro</td><tr>
+<tr><td colspan="12">Heading and intro</td></tr>
 <tr>
-<td>dropdown selector to choose chart content <br> line chart</td>
-<td>checkbox selector to choose chart type <br> bar chart</td>
+<td colspan="2">dropdown</td>
+<td colspan="4">Line chart</td>
+<td colspan="2">checkbox</td>
+<td colspan="4">Bar chart</td>
 </tr>
 <tr>
-<td>map showing locations of events</td>
-<td>card showing info for an event when clicked on in the map</td>
+<td colspan="6">Map with event markers</td>
+<td colspan="6">card showing event info</td>
 </tr>
 </table>
+
+The Dash website has a place for developers to
+share [examples of their work](https://plotly.com/examples/?_gl=1*180ybt8*_ga*MjEyMzA3NDMxOS4xNjk2MzQwMTcx*_ga_6G7EE0JNSC*MTcwNDkwMDE4NS45LjEuMTcwNDkwMTUyNi4zMy4wLjA.).
+I looked at a number of these to help with deciding on the overall page structure. There is a section of examples
+called 'Connecting to APIs' that might be of particular relevance to the coursework.
 
 ## Check the Dash app runs
 
@@ -125,12 +132,357 @@ identify an element on a page). More on this in a later section.
 
 ### Add HTML elements to the Dash layout
 
-The dash app starter code in `paralympics_dash.py`.
+The dash app starter code in `paralympics_dash.py` currently looks like this:
+
+```python
+# Imports for Dash and Dash.html
+from dash import Dash, html
+
+# Create an instance of the Dash app
+app = Dash(__name__)
+
+# Add an HTML layout to the Dash app
+app.layout = html.Div([
+    html.Div(children='Hello World')
+])
+
+# Run the app
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+HTML to layout the page will be added to the `app.layout =` section of the code.
+
+1. Add a heading
+
+TODO: Not complete here!
 
 ## Style the Dash layout using Bootstrap CSS
 
+### CSS overview
+
+CSS stands for Cascading Style Sheets. It provides styles for HTML elements.
+
+Web browsers apply CSS rules to a document. A CSS **rule** consist of:
+
+- A **selector**, which selects the element(s) you want to style
+
+- A declaration which is a set of **properties** with values
+
+The following CSS rule selects the paragraph tag `p` and makes the font colour red and the text center-aligned.
+
+```css
+p {
+    color: red;
+    text-align: center;
+}
+```
+
+A set of these CSS rules are called a **stylesheet**.
+
+CSS can be added to HTML elements in 3 ways:
+
+- **Inline**: using the style attribute in HTML elements
+- **Internal**: using a `<style>` element in the `<head>` section
+- **External**: using an external CSS file e.g. `my_css.css`.
+
+An **Inline style** affects one element only and is defined in the `style'=""` attribute of that HTML element
+e.g. `<h1 style="color: blue; background-color: yellow;">Hello World! </h1>`. Avoid using this method as it is much
+harder to maintain!
+
+An **internal stylesheet** places CSS inside a `<style>` element contained inside the HTML `<head>` section.
+
+An **external CSS file** is usually the preferred method and is used in most COMP0034 example code. CSS is
+written in a separate file with a `.css` extension.
+The stylesheet `.css` file is referenced in the `<head>` section of the html using an HTML `<link>`
+element.
+
+A little more detail is included in the optional activity [3-css-intro.md](3-css_intro.md)
+
+In Dash you apply an inline style using the style property of an HTML component e.g.:
+
+```python
+app.layout = html.Div([
+    html.Div(className='row', children='My First App with Data, Graph, and Controls',
+             style={'textAlign': 'center', 'color': 'blue', 'fontSize': 30}),
+])
+```
+
+In most cases you will use an external stylesheet. This can either be a .css file saved in your project file structure,
+or .css hosted elsewhere (usually on a CDN). A CDN (Content Distribution Network) is a
+distributed group of servers that caches content and typically has several locations near end users. Its aim is to
+improve load times; and for those who use it, to reduce the costs of hosting files themselves.
+
+In Dash you do not have an HTML file, so you define the location of the stylesheet (or stylesheets if you have more than
+one) and pass this as a parameter to the Dash app instance. This example uses
+the [CDN version of Milligram css](https://milligram.io):
+
+```python
+# Import packages
+from dash import Dash
+
+# Initialize the app using Milligram css
+external_stylesheets = ['https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css']
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+# App layout etc...
+```
+
+The Dash documentation does not currently cover how to reference a .css file from your project folder. Community posts
+suggest you can do it, though it does not appear to be straightforward, so is not included in this tutorial.
+
+### Using open source CSS in Dash
+
+While you can write your own CSS, **for your coursework it is recommended that you use a third party CSS**. Check it has
+an open source license, i.e. that you are given permission by its author to use it. Writing your own CSS is not
+considered in the mark scheme so writing your own CSS will not improve your marks.
+
+Bootstrap is a popular CSS library that has extensive documentation and support and is used in the course materials for
+this reason.
+
+Bootstrap is widely used which some say leads to many sites looking similar, others criticisms include the fact that it
+is comprehensive, leading to larger file sizes, and yet you may only want to use a small subset of its features. There
+are alternatives to Bootstrap you can explore, try searching `alternatives to Bootstrap`, such as:
+
+- [Pure.css](https://purecss.io/start/)
+- [Materialize](https://materializecss.com/getting-started.html)
+- [ZURB foundation](https://foundation.zurb.com/)
+
+The [Bootstrap documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/#quick-start) gives the URL
+to access the hosted version.
+
+For Dash, there is an additional
+library, [dash bootstrap components](https://dash-bootstrap-components.opensource.faculty.ai), that makes Bootstrap
+easier to apply to Dash. This is used in the remainder of the tutorial.
+
+To use the Dash bootstrap components timesheets also
+have [themes](https://dash-bootstrap-components.opensource.faculty.ai/docs/themes/) that you can apply to achieve a
+particular look and feel.
+
+To apply a Boostrap standard them, add the import for dash_bootstrap_components and then reference the theme as the
+external stylesheet. The following is the standard Bootstrap look and feel:
+
+```python
+from dash import Dash
+import dash_bootstrap_components as dbc
+
+# Variable that contains the external_stylesheet to use, in this case Bootstrap styling from dash bootstrap components (dbc)
+external_stylesheets = [dbc.themes.BOOTSTRAP]
+
+# Pass the stylesheet variable to the Dash app constructor
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+```
+
+### Activity
+
+1. Add the import: `import dash_bootstrap_components as dbc`
+2. Add a bootstrap theme external stylesheet to the paralympics app. You may wish to try a few to see which you like.
+3. Run the dash app.
+
+Dash will try to update dynamically when you make changes, so you could experiment with a few different themes without
+needing to stop and restart the server.
+
 ## Adapt the Dash layout to support responsive styling
 
-## Adapt the Dash layout to allow several chart areas
+### Intro to responsive design
 
-## Add dropdown selectors and check boxes to the Dash layout
+The intent of responsive design is to make web pages look good on all devices: desktop, tablets, and phones. For
+example, people are typically used to scrolling websites vertically but not horizontally. So there are techniques to
+achieve responsive web design such as resize, hide, shrink, enlarge, move the content.
+
+To create a web page that is responsive:
+
+- Set the viewport
+- Use responsive images
+- Use responsive text
+- Use media queries (apply a different style for different screen sizes)
+- Optionally, use a grid layout
+
+The **viewport** is the visible area inside the browser window. A `<meta>` viewport element gives the browser
+instructions on how to control the page's dimensions and scaling. This gives the browser instructions on how to control
+the page's dimensions and scaling. For example the following code would be placed in the `<head>` section of a html
+document.
+
+```html
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+- `width=device-width` sets the width of the page to follow the screen-width of the device (varies depending on the
+  device).
+- `initial-scale=1` sets the initial zoom level when the page is first loaded by the browser.
+
+To use Bootstrap in a responsive way, the minimum you need is:
+
+1. Include the `<meta>` tag in the `<head>` to set the page width to the device
+   `<meta name="viewport" content="width=device-width, initial-scale=1">`.
+2. Wrap the page contents in an HTML `<div>` tag that has a container CSS class. Bootstrap offers two container classes:
+    - `.container` class provides a responsive fixed width container
+    - `.container-fluid` class provides a full width container, spanning the entire width of the viewport
+
+As you don't have an HTML file in Dash then to pass in tags that would usually be the head section, you pass them to the
+Dash app object. You did this with the stylesheets in the earlier activity.
+
+The code to add the <meta> tag to the head section is as follows:
+
+```python
+from dash import Dash
+import dash_bootstrap_components as dbc
+
+# Define a variable that contains the external_stylesheet to use, in this case Bootstrap styling from dash bootstrap components (dbc)
+external_stylesheets = [dbc.themes.BOOTSTRAP]
+
+# Define a variable that contains the meta tags
+meta_tags = [
+    {"name": "viewport", "content": "width=device-width, initial-scale=1"},
+]
+
+# Pass the stylesheet and meta_tag variables to the Dash app constructor
+app = Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=meta_tags)
+```
+
+To wrap the entire page content in a div that applies one of bootstrap's container classes, use the dbc.Container()
+component:
+
+```python
+import dash_bootstrap_components
+
+app.layout = dash_bootstrap_components.Container(
+    # The rest of the html contents can go here
+)
+```
+
+You can wrap individual elements in Containers rather than the entire page. The above is just one approach.
+
+Other responsive aspects to consider, such as images and text size, are briefly covered
+in [4-responsive_intro.md](4-responsive_intro.md).
+
+### Update the paralympics Dash app layout to a responsive design
+
+1. Add a variable that defines a meta tag
+2. Pass the meta tag variable to the Dash app constructor
+3. Wrap the layout in a dbc.Container() components
+4. Check the updated Dash app in a browser
+
+## Use the Bootstrap grid system to structure the paralympics Dash app
+
+### Overview
+
+This is the most challenging part of the tutorial.
+
+Use the skills you just learned for the HTML components and Dash Bootstrap Components to create a layout that is similar
+to the following.
+
+This uses a grid layout that logically divides the page into 3 rows, where each row spans a width that can be divided
+into 12.
+
+Each column in a row can span 1 or of the 12 divisions. So if there are 3 equal columns then each column would have a
+width of '4' (as 3 x 4 = 12).
+
+<table>
+<tr><td colspan="12">12 cols: Heading and intro</td><tr>
+<tr>
+<td colspan="2">2 cols:<br>dropdown</td>
+<td colspan="4">4 cols: Line chart</td>
+<td colspan="2">2 cols:<br>checkbox</td>
+<td colspan="4">4 cols: Bar chart</td>
+</tr>
+<tr>
+<td colspan="6">6 cols: Map with event markers</td>
+<td colspan="6">6 cols: card showing event info</td>
+</tr>
+</table>
+
+You can write all the code by adding it to the layout. However, to break up the code to try and make it easier to read,
+in the following steps each row and cell is defined in as separate variable, then the variables will be referenced from
+the app.layout.
+
+You may wish to refer to the following to complete this activity:
+
+- [Dash bootstrap components layout documentation](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/)
+- [Dash tutorial on styling](https://dash.plotly.com/tutorial#styling-your-app)
+- [Bootstrap grid documentation](https://getbootstrap.com/docs/5.0/layout/grid/)
+
+### 1. Define the layout
+
+The layout described above has 3 rows and a varying number of columns within each row.
+
+The following code provides a skeleton for the columns in the rows with the widths. The `children=[]` is where you will
+place the children of an element. The full syntax is `children=[]`though if this is placed as the first parameter in the
+brackets then the `children=` can be omitted, so you will often just see `[]`. So, for a row `dbc.Row([])` the '
+children' are the columns in that row. For the columns, `dbc.Col([])` in a row, the children will be the selectors,
+charts, text etc.
+
+The first row has a single column that spans the entire width. You can either specify the column width as 12 or omit the
+width as it will then default to fit the available space.
+
+Add the code `paralympics_dash.py`. The use of variables for each row is just to breaks the code down, so it may be
+easier to read. This does not affect the code functioning, you can place it all inside `app.layout` if you prefer.
+
+```python
+import dash_bootstrap_components as dbc
+
+row_one = dbc.Row([
+    dbc.Col([]),
+])
+
+row_two = dbc.Row([
+    dbc.Col(children=[], width=2),
+    dbc.Col(children=[], width=4),
+    dbc.Col(children=[], width=2),
+    dbc.Col(children=[], width=4),
+])
+
+row_three = dbc.Row([
+    dbc.Col(children=[], width=6),
+    dbc.Col(children=[], width=6),
+])
+
+app.layout = dbc.Container([
+    row_one,
+    row_two,
+    row_three,
+])
+```
+
+If you run the app now you will see a blank page. The rows and columns provide structure, however there is no content
+yet.
+
+### 2. Add the contents to the rows
+
+The first row has a heading level 1 with the app name and a paragraph with some descriptive text (lorem ipsum
+placeholder for now). You can write what you wish or copy the text below. Place these inside the children=[] for row
+one.
+
+```python
+hmlt.H1(""),
+html.P(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue luctus elit nec gravida. Fusce efficitur posuere metus posuere malesuada. ")
+```
+
+The second row has:
+
+- column with a width=2 containing
+  an [input of type select](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/) (a
+  dropdown).
+- column with a width=4 that will have a line chart.
+- column with a width=2 containing
+  an [input of type checklist](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/input/)
+- a column of width=4 that will contain a bar chart.
+
+The third row has:
+
+- a column with a width=6 that will have a map visualisation with markers for events.
+- a column with a width=6 that will display details for a selected paralympic event.
+
+The select input (dropdown) will be used to select a type of line chart which can be Events,. If you are using dbc then
+use the [dbc.Select()](), if you are using Dash without dbc then use [Dash Core Components, dcc.Dropdown]().
+
+```python
+
+```
+
+### The end
+
+Well done on reaching the end of the activities! You have now built a dashboard layout. Next week you will add charts to
+this and learn how to add additional pages to the layout.
