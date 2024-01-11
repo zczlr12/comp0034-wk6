@@ -151,11 +151,19 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-HTML to layout the page will be added to the `app.layout =` section of the code.
+The HTML to layout the page will be added to the `app.layout =` section of the code.
 
-1. Add a heading
+Add some HTML to the page such as paragraph (html.P), heading 1 (html.H1) and image (html.Img).
+These are in the [Dash html components reference](https://dash.plotly.com/dash-html-components).
 
-TODO: Not complete here!
+Images are in the 'assets' folder. To reference these in the `src=` parameter use the `app.get_asset_url()`
+function. In the brackets specify the file name and any subdirectory below the 'assets' directory,
+e.g. `html.Img(src=app.get_asset_url('bar-chart-placeholder.png'))`
+
+1. Add an H1 heading using html.H1()
+2. Add an image using html.Img()
+
+Add any other elements you want to try.
 
 ## Style the Dash layout using Bootstrap CSS
 
@@ -365,6 +373,9 @@ in [4-responsive_intro.md](4-responsive_intro.md).
 4. Check the updated Dash app in a browser
 
 ## Use the Bootstrap grid system to structure the paralympics Dash app
+
+Before starting, remove any of the HTML elements you added inside the layout such as H1, P, Img etc. in an earlier
+activity.
 
 ### Overview
 
