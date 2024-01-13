@@ -1,5 +1,7 @@
 # COMP0034 Week 6 Coding activities: HTML, CSS, Flask Jinja and Dash layout
 
+NB: The apps are now in a directory called 'src'. Remember to do the `pip install -e .` step below.
+
 ## Set-up
 
 1. Fork the repository <https://github.com/nicholsons/comp0034-wk6>

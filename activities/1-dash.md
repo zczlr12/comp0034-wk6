@@ -384,7 +384,7 @@ This is the most challenging part of the tutorial.
 Use the skills you just learned for the HTML components and Dash Bootstrap Components to create a layout that is similar
 to the following.
 
-This uses a grid layout that logically divides the page into 3 rows, where each row spans a width that can be divided
+This uses a grid layout that logically divides the page into 4 rows, where each row spans a width that can be divided
 into 12.
 
 Each column in a row can span 1 or of the 12 divisions. So if there are 3 equal columns then each column would have a
@@ -394,9 +394,13 @@ width of '4' (as 3 x 4 = 12).
 <tr><td colspan="12">12 cols: Heading and intro</td><tr>
 <tr>
 <td colspan="2">2 cols:<br>dropdown</td>
-<td colspan="4">4 cols: Line chart</td>
-<td colspan="2">2 cols:<br>checkbox</td>
-<td colspan="4">4 cols: Bar chart</td>
+<td colspan="4"></td>
+<td colspan="2">2 cols, offset by 4 cols:<br>checkbox</td>
+<td colspan="4"></td>
+</tr>
+<tr>
+<td colspan="6">6 cols: Line chart</td>
+<td colspan="6">6 cols: Bar chart</td>
 </tr>
 <tr>
 <td colspan="6">6 cols: Map with event markers</td>
@@ -439,12 +443,15 @@ row_one = dbc.Row([
 
 row_two = dbc.Row([
     dbc.Col(children=[], width=2),
-    dbc.Col(children=[], width=4),
-    dbc.Col(children=[], width=2),
-    dbc.Col(children=[], width=4),
+    dbc.Col(children=[], width={"size": 2, "offset": 4}),  # 4 'empty' columns between this and the previous column
 ])
 
 row_three = dbc.Row([
+    dbc.Col(children=[], width=6),
+    dbc.Col(children=[], width=6),
+])
+
+row_four = dbc.Row([
     dbc.Col(children=[], width=6),
     dbc.Col(children=[], width=6),
 ])
@@ -453,6 +460,7 @@ app.layout = dbc.Container([
     row_one,
     row_two,
     row_three,
+    row_four
 ])
 ```
 
