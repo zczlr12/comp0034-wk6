@@ -15,7 +15,7 @@ db = SQLAlchemy(model_class=Base)
 
 
 def create_app(test_config=None):
-    app = Flask('paralympics', instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='l-tirPCf1S44mXDGoWqWlA',
         SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(app.instance_path, 'paralympics.sqlite'),
@@ -29,8 +29,8 @@ def create_app(test_config=None):
 
     db.init_app(app)
 
-    from paralympics_flask.models import User, Event, Region
     with app.app_context():
+        from paralympics_flask.models import User, Event, Region
         db.create_all()
         add_data_from_csv()
 
@@ -48,7 +48,7 @@ def add_data_from_csv():
     first_region = db.session.execute(db.select(Region)).first()
     if not first_region:
         print("Start adding region data to the database")
-        noc_file = Path(__file__).parent.parent.joinpath("data", "noc_regions.csv")
+        noc_file = Path(__file__).parent.parent.parent.joinpath("data", "noc_regions.csv")
         with open(noc_file, 'r') as file:
             csv_reader = csv.reader(file)
             next(csv_reader)  # Skip header row
@@ -61,7 +61,7 @@ def add_data_from_csv():
     first_event = db.session.execute(db.select(Event)).first()
     if not first_event:
         print("Start adding event data to the database")
-        event_file = Path(__file__).parent.parent.joinpath("data", "paralympic_events.csv")
+        event_file = Path(__file__).parent.parent.parent.joinpath("data", "paralympic_events.csv")
         with open(event_file, 'r') as file:
             csv_reader = csv.reader(file)
             next(csv_reader)

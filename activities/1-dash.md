@@ -33,7 +33,7 @@ called 'Connecting to APIs' that might be of particular relevance to the coursew
 
 ## Check the Dash app runs
 
-There is code to run a [basic Dash app](../paralympics_dash/paralympics_dash.py) that displays 'Hello world'. This
+There is code to run a [basic Dash app](../src/paralympics_dash/paralympics_dash.py) that displays 'Hello world'. This
 is copied from the [Dash tutorial](https://dash.plotly.com/tutorial).
 
 1. `python paralympics_dash/paralympics_dash.py`

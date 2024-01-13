@@ -13,7 +13,7 @@
    Flask or Dash if you only want to complete the activities for one type of app.
 
     - e.g. `pip install -r requirements.txt`
-6. Install the paralympics app code e.g. `pip install -e .`
+6. Install the paralympics code e.g. `pip install -e .`
 
 ## Activity instructions
 

@@ -74,8 +74,8 @@ By default, Flask looks for templates in a folder named `templates` in the appli
 
 ### Activity: change the Flask index() route to display a page from an HTML template
 
-1. Find the [templates folder](../paralympics_flask/templates) in the Flask application.
-2. Find and open [index.html](../paralympics_flask/templates/index.html).
+1. Find the [templates folder](../src/paralympics_flask/templates) in the Flask application.
+2. Find and open [index.html](../src/paralympics_flask/templates/index.html).
 3. Add enough HTML to create a basic page. Have a look at the code above.
 4. Add a paragraph tag in the body that says 'Welcome to HTML!'
    e.g. `<p>Welcome to HTML!</p>`.
