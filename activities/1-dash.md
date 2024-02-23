@@ -390,23 +390,27 @@ into 12.
 Each column in a row can span 1 or of the 12 divisions. So if there are 3 equal columns then each column would have a
 width of '4' (as 3 x 4 = 12).
 
+```html
 <table>
-<tr><td colspan="12">12 cols: Heading and intro</td><tr>
-<tr>
-<td colspan="2">2 cols:<br>dropdown</td>
-<td colspan="4"></td>
-<td colspan="2">2 cols, offset by 4 cols:<br>checkbox</td>
-<td colspan="4"></td>
-</tr>
-<tr>
-<td colspan="6">6 cols: Line chart</td>
-<td colspan="6">6 cols: Bar chart</td>
-</tr>
-<tr>
-<td colspan="6">6 cols: Map with event markers</td>
-<td colspan="6">6 cols: card showing event info</td>
-</tr>
+    <tr>
+        <td colspan="12">12 cols: Heading and intro</td>
+    <tr>
+    <tr>
+        <td colspan="2">2 cols:<br>dropdown</td>
+        <td colspan="4"></td>
+        <td colspan="2">2 cols, offset by 4 cols:<br>checkbox</td>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="6">6 cols: Line chart</td>
+        <td colspan="6">6 cols: Bar chart</td>
+    </tr>
+    <tr>
+        <td colspan="6">6 cols: Map with event markers</td>
+        <td colspan="6">6 cols: card showing event info</td>
+    </tr>
 </table>
+```
 
 You can write all the code by adding it to the layout. However, to break up the code to try and make it easier to read,
 in the following steps each row and cell is defined in as separate variable, then the variables will be referenced from
